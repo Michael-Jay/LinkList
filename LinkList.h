@@ -15,28 +15,28 @@ typedef int dtype;
 class LinkList{
 
 public:
+	LinkList();
 	LinkList(dtype dat);
 	~LinkList();
 	bool isEmpty() const;
 	int getLength() const;
+	
 	void insert(int pos, dtype  addata);
 	void delPos(int pos);
 	void delData(dtype deldata);
 	dtype getPos(int pos);
 	void show() const;
 
-private:
-
 	class Node{
-		private:
+		public:
 			dtype m_data;
 			Node* m_next;
-		public:
 			Node(dtype dat =0, Node* nxt = 0);
 			~Node();
 	};
 
-	Node* m_head;
+	//這裏必須要用域名解析::
+	LinkList::Node* m_head;
 
 };
 

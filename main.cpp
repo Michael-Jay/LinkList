@@ -16,8 +16,6 @@ int main(int argc, char* argv[])
 {
 
 	LinkList test;	
-	test.createHead();
-	test.init();
 
 	fun(&test);
 
@@ -36,10 +34,6 @@ int main(int argc, char* argv[])
 	
 	cout<< "after delete 30..."<<endl;
 	test.delData(30);
-	fun(&test);
-
-	cout<< "after clean..."<<endl;
-	test.clean();
 	fun(&test);
 
 	return 0;

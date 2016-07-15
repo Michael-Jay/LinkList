@@ -1,13 +1,18 @@
 #include "LinkList.h"
 #include <iostream>
 
+
 /*father class*/
+LinkList::LinkList(){
+	m_head = new Node(0,0);
+}
+
 LinkList::LinkList(dtype dat){
 	m_head = new Node(dat,0);
 }
 
-~LinkList::LinkList(){
-	delete head;
+LinkList::~LinkList(){
+	delete m_head;
 }
 
 /*child class*/
@@ -16,20 +21,22 @@ LinkList::Node::Node(dtype dat, Node* nxt)
 	m_data = dat;
 	m_next = nxt;
 }
+		
+LinkList::Node::~Node()
+{
 
-LinkList::Node::~Node();
-
+}
 
 
 bool LinkList::isEmpty() const
-{	
+{
 	return (getLength() == 0) ? true: false;
 }
 
-int LinkList::getLength()
+int LinkList::getLength() const
 {
 	int len = 0;
-	Node* tmpNode = m_head->next;
+	Node* tmpNode = m_head->m_next;
 	while(tmpNode != 0){
 		len ++;
 		tmpNode = tmpNode->m_next;
@@ -47,7 +54,7 @@ void LinkList::insert(int pos, dtype  addata)
 	int count = 0;
 	Node* addNode = new Node;	//要插入的数据指针
 	Node* tmpNode;	//保存要插入位置的前一个节点指针
-	tmpNode = head;
+	tmpNode = m_head;
 	while(tmpNode != 0){
 		if(++count == pos)
 			break;
@@ -65,7 +72,7 @@ void LinkList::insert(int pos, dtype  addata)
 void LinkList::delData(dtype deldata)
 {
 	using namespace std;
-	Node* tmpNode = head;
+	Node* tmpNode = m_head;
 	int pos = 0;
 	while((tmpNode->m_data != deldata) && (tmpNode != 0))
 	{
@@ -108,7 +115,7 @@ void LinkList::delPos(int pos)
 	int count = 0;
 	Node* delNode;	//要删除的数据指针
 	Node* tmpNode;	//保存要删除位置的前一个节点指针
-	tmpNode = head;
+	tmpNode = m_head;
 	while(tmpNode != 0){
 		if(++count == pos)
 			break;
@@ -121,7 +128,7 @@ void LinkList::delPos(int pos)
 	delete delNode;
 	delNode = 0;
 }
-void LinkList::show()
+void LinkList::show() const
 {
 	using namespace std;
 	if( isEmpty()){
@@ -129,7 +136,7 @@ void LinkList::show()
 		return;
 	}
 
-	Node* tmpNode = head->m_next;
+	Node* tmpNode = m_head->m_next;
 	cout<< "LinkList: "<<endl;
 	while(tmpNode != 0){
 		cout<< tmpNode->m_data <<", ";
