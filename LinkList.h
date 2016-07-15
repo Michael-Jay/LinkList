@@ -11,26 +11,33 @@
 
 typedef int dtype;
 
-struct LinkList{
 
-	struct Node{
-		dtype data;
-		Node* next;
-		void init(dtype data=0, Node* nxt=0);
-	}*head;
+class LinkList{
 
-	void init();	//初始化为空head=0
-	bool isEmpty();
-	void clean();
-	void createHead();	//利用头插法创建
-	void createTail();
-	//(LinkList::struct Node*) getPointPos(int pos);	//找到指定位置的前一个元素的指针，方便插入
-	int getLength();
+public:
+	LinkList(dtype dat);
+	~LinkList();
+	bool isEmpty() const;
+	int getLength() const;
 	void insert(int pos, dtype  addata);
 	void delPos(int pos);
 	void delData(dtype deldata);
 	dtype getPos(int pos);
-	void show();
+	void show() const;
+
+private:
+
+	class Node{
+		private:
+			dtype m_data;
+			Node* m_next;
+		public:
+			Node(dtype dat =0, Node* nxt = 0);
+			~Node();
+	};
+
+	Node* m_head;
+
 };
 
 

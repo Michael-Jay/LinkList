@@ -1,56 +1,38 @@
 #include "LinkList.h"
 #include <iostream>
 
-void LinkList::createHead()	//利用头插法创建
-{
-	head->init();		
+/*father class*/
+LinkList::LinkList(dtype dat){
+	m_head = new Node(dat,0);
 }
 
-void LinkList::Node::init(dtype dat, Node* nxt)
-{
-	data = dat;
-	next = nxt;
+~LinkList::LinkList(){
+	delete head;
 }
 
-void LinkList::init()
+/*child class*/
+LinkList::Node::Node(dtype dat, Node* nxt)
 {
-	head->data = 0;
-	head->next = 0;
+	m_data = dat;
+	m_next = nxt;
 }
 
-bool LinkList::isEmpty()
+LinkList::Node::~Node();
+
+
+
+bool LinkList::isEmpty() const
 {	
 	return (getLength() == 0) ? true: false;
-}
-
-void LinkList::clean()
-{
-	using namespace std;
-	if(this->isEmpty()){
-		cout<<"List is already clear..." << endl;
-		return;
-	}else{
-		cout<< "cleaning..."<< endl;
-	}
-
-	int len = getLength();
-	for(int i = 1; i<= len; i++)
-	{
-		cout << "cleaning : " << getPos(1) << endl;
-		delPos(1);
-
-	}
-	cout<<"List cleaned complet." << endl;
-	return;
 }
 
 int LinkList::getLength()
 {
 	int len = 0;
-	Node* tmpNode = head->next;
+	Node* tmpNode = m_head->next;
 	while(tmpNode != 0){
 		len ++;
-		tmpNode = tmpNode->next;
+		tmpNode = tmpNode->m_next;
 	}
 	return len;
 }
@@ -69,12 +51,12 @@ void LinkList::insert(int pos, dtype  addata)
 	while(tmpNode != 0){
 		if(++count == pos)
 			break;
-		tmpNode = tmpNode->next;
+		tmpNode = tmpNode->m_next;
 	}
 
-	addNode->init(addata, 0);
-	addNode->next = tmpNode->next;
-	tmpNode->next = addNode;
+	addNode->m_data = addata;
+	addNode->m_next = tmpNode->m_next;
+	tmpNode->m_next = addNode;
 	tmpNode = 0;
 }
 
@@ -85,10 +67,10 @@ void LinkList::delData(dtype deldata)
 	using namespace std;
 	Node* tmpNode = head;
 	int pos = 0;
-	while((tmpNode->data != deldata) && (tmpNode != 0))
+	while((tmpNode->m_data != deldata) && (tmpNode != 0))
 	{
 		pos++;
-		tmpNode = tmpNode->next;
+		tmpNode = tmpNode->m_next;
 	}
 
 	delPos(pos);
@@ -104,13 +86,13 @@ dtype LinkList::getPos(int pos)
 	}
 	int count = 0;
 	Node* tmpNode;
-	tmpNode = head;
+	tmpNode = m_head;
 	while(tmpNode != 0){
 		if(count++ == pos)
 			break;
-		tmpNode = tmpNode->next;
+		tmpNode = tmpNode->m_next;
 	}
-	return tmpNode->data;
+	return tmpNode->m_data;
 
 }
 
@@ -130,12 +112,12 @@ void LinkList::delPos(int pos)
 	while(tmpNode != 0){
 		if(++count == pos)
 			break;
-		tmpNode = tmpNode->next;
+		tmpNode = tmpNode->m_next;
 	}
 
-	delNode = tmpNode->next;
-	tmpNode->next = delNode->next;
-	delNode->next = 0;
+	delNode = tmpNode->m_next;
+	tmpNode->m_next = delNode->m_next;
+	delNode->m_next = 0;
 	delete delNode;
 	delNode = 0;
 }
@@ -146,12 +128,12 @@ void LinkList::show()
 		cout << "LinkList is Empty." << endl;
 		return;
 	}
-	using namespace std;
-	Node* tmpNode = head->next;
+
+	Node* tmpNode = head->m_next;
 	cout<< "LinkList: "<<endl;
 	while(tmpNode != 0){
-		cout<< tmpNode->data <<", ";
-		tmpNode = tmpNode->next;
+		cout<< tmpNode->m_data <<", ";
+		tmpNode = tmpNode->m_next;
 	}
 	cout << endl;
 }
